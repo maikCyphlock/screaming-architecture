@@ -51,17 +51,19 @@ Organize your code into modules that reflect the use cases of your application. 
 Your architectures should tell readers about the system, not about the frameworks you used in your system. If you are building a health-care system, then when new programmers look at the source repository, their first impression should be: “Oh, this is a heath-care system”. Those new programmers should be able to learn all the use cases of the system, and still not know how the system is delivered. They may come to you and say: “We see some things that look sorta like models,
 but where are the views and controllers”, and you should say: “Oh, those are details that needn’t concern you at the moment, we’ll show them to you later.”
 
-Use descriptive names for your functions and variables that reflect their purpose in the context of the use case. For example, instead of using generic names like getData() or processInput(), use names like fetchPatientRecord() or scheduleAppointment().
-
+Use descriptive names for your functions and variables that reflect their purpose in the context of the use case. For example, instead of using generic names like ``getData()`` or ``processInput()``, use names like ``fetchPatientRecord()`` or ``scheduleAppointment()``
+``` javascript
 // Bad
 function getData(id) {
   // ...
 }
-
+``` 
+``` javascript
 // Good
 function fetchPatientRecord(patientId) {
   // ...
 }
+```
 Keep your business logic separate from your framework or delivery mechanism. For example, if you are using a web framework like Express, keep your route handlers thin and delegate to business logic functions that are defined elsewhere. This will make it easier to test your code and change your framework or delivery mechanism in the future.
 ``` javascript
 // Bad
@@ -76,8 +78,9 @@ app.get('/patients/:id', function(req, res) {
   res.render('patient-record', { patient, age });
 });
 ```
-// Good
+
 ``` javascript
+// Good
 function fetchPatientRecord(patientId) {
   // Fetch patient record from database
   const patient = // ...
@@ -114,12 +117,13 @@ function fetchPatientRecord(db, patientId) {
   const patient = db.query(`SELECT * FROM patients WHERE id = ${patientId}`);
   return patient;
 }
-```
 
 const db = require('./database');
 const patient = fetchPatientRecord(db, 123);
+```
 Write automated tests for your code that cover all of your use cases. This will help ensure that your code is working correctly and will make it easier to refactor or change your code in the future. Use a testing framework like Jest or Mocha to write your tests.
 
+``` javascript
 const fetchPatientRecord = require('./patient-management/fetch-patient-record');
 const db = require('./database');
 
@@ -130,3 +134,5 @@ test('fetchPatientRecord returns correct patient record', () => {
   const patient = fetchPatientRecord(db, 123);
   expect(patient).toEqual(expectedPatient);
 });
+
+```
